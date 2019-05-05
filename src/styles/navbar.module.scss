@@ -1,0 +1,22 @@
+.link {
+  color: white;
+  text-decoration: none;
+  font-size: .9rem;
+  margin-right: 1.3rem;
+  text-decoration: none;
+}
+
+.link:hover {
+  color: #666666;
+}
+
+.active-link {
+  color: #dd8888;
+}
+
+.nav-list {
+  display: flex;
+  list-style-type: none;
+  margin: 0;
+}
+
