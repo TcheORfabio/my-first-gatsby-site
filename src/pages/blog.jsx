@@ -7,12 +7,11 @@ import SEO from '../components/seo';
 
 const getPosts = edges => edges.map(({ node }) => (
   <li>
-    <Link to={`/blog/${node.fields.slug}/`}>
+    <Link to={`/blog/${node.slug}/`}>
       <article>
-        <h2>{node.frontmatter.title}</h2>
-        <p>By: {node.frontmatter.author}</p>
-        <p>{node.excerpt.substring(0, 35)}...</p>
-        <p>Created in: {node.frontmatter.date}</p>
+        <h2>{node.title}</h2>
+        <p>By: {node.author}</p>
+        <p>Created in: {node.date}</p>
       </article>
     </Link>
   </li>
@@ -22,23 +21,24 @@ const BlogPage = () => (
   <StaticQuery
     query={
       graphql`
-        query getPosts {
-          allMarkdownRemark(sort: { fields: [frontmatter___date] }) {
-            edges {
-              node {
-                frontmatter {
-                  title
-                  author
-                  date
-                }
-                excerpt
-                fields {
-                  slug
-                }
-              }
+      query {
+        allContentfulBlogPost(
+          sort: {
+            fields: date,
+            order: DESC
+          }
+        ) 
+        {
+          edges {
+            node {
+              title
+              slug
+              author
+              date(formatString: "DD-MM-YYYY")
             }
           }
         }
+      }
       `
     }
     render={
@@ -48,7 +48,7 @@ const BlogPage = () => (
           <h1>Blog Posts!</h1>
           <ol>
             {
-              getPosts(data.allMarkdownRemark.edges)
+              getPosts(data.allContentfulBlogPost.edges)
             }
           </ol>
         </Layout>
