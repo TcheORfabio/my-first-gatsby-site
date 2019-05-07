@@ -1,7 +1,7 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import { StaticQuery, graphql } from 'gatsby';
 import Img from 'gatsby-image';
-import PropTypes from 'prop-types';
 
 /*
  * This component is built using `gatsby-image` to automatically serve optimized
@@ -14,24 +14,38 @@ import PropTypes from 'prop-types';
  * - `StaticQuery`: https://gatsby.dev/staticquery
  */
 
-const Image = ({ imageUrl }) => (
+const Image = ({ relativePath }) => (
   <StaticQuery
     query={graphql`
       query {
-        placeholderImage: file(relativePath: { eq: "gatsby-astronaut.png" }) {
-          childImageSharp {
-            fluid(maxWidth: 300) {
-              ...GatsbyImageSharpFluid
+        images: allFile {
+          edges {
+            node {
+              relativePath
+              name
+              childImageSharp {
+                fluid(maxWidth: 600) {
+                  ...GatsbyImageSharpFluid
+                }
+              }
             }
           }
         }
       }
     `}
-    render={data => <Img fluid={data.placeholderImage.childImageSharp.fluid} />}
+    render={(data) => {
+      const image = data.images.edges.filter(({ node }) => relativePath === node.relativePath);
+      if (!image) return null;
+      const imageFluid = image.node.childImageSharp.fluid;
+      return (
+        <Img fluid={imageFluid} />
+      );
+    }}
   />
 );
 
 Image.propTypes = {
-  imageUrl: PropTypes.string.isRequired,
+  relativePath: PropTypes.string.isRequired,
 };
+
 export default Image;
