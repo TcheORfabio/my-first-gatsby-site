@@ -33,8 +33,8 @@ const Image = ({ relativePath }) => (
         }
       }
     `}
-    render={(data) => {
-      const image = data.images.edges.filter(({ node }) => relativePath === node.relativePath);
+    render={({ images }) => {
+      const image = images.edges.find(({ node }) => relativePath.includes(node.relativePath));
       if (!image) return null;
       const imageFluid = image.node.childImageSharp.fluid;
       return (

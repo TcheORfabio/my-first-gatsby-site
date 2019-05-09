@@ -6,7 +6,7 @@ import Layout from '../components/layout';
 import SEO from '../components/seo';
 
 const getPosts = edges => edges.map(({ node }) => (
-  <li>
+  <li key={node.title}>
     <Link to={`/blog/${node.slug}/`}>
       <article>
         <h2>{node.title}</h2>
