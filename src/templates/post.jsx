@@ -7,6 +7,7 @@ import { documentToReactComponents } from '@contentful/rich-text-react-renderer'
 import Image from 'gatsby-image';
 
 import Layout from '../components/layout';
+import SEO from '../components/seo';
 
 const renderBody = documentToReactComponents;
 const getImageFluid = (node, data) => {
@@ -62,6 +63,7 @@ const Post = ({ data }) => {
 
   return (
     <Layout>
+      <SEO title={`Blog | ${title}`} keywords={['gatsby', 'application', 'react']} />
       <article>
         <h1>{title}</h1>
         <p>Author: {author}</p>

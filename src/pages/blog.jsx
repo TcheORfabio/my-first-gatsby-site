@@ -44,7 +44,7 @@ const BlogPage = () => (
     render={
       data => (
         <Layout>
-          <SEO title="Blog Page" />
+          <SEO title="Blog" keywords={['gatsby', 'application', 'react']} />
           <h1>Blog Posts!</h1>
           <ol>
             {
